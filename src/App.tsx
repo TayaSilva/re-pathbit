@@ -1,20 +1,35 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   ArrowRight,
   Bot,
   ChartNoAxesCombined,
+  Headset,
   Lightbulb,
   MonitorSmartphone,
+  Puzzle,
   SquareCode,
   UsersRound,
+  Zap,
   type LucideIcon,
 } from "lucide-react";
+import bgIa from "./assets/images/bg-ia.jpeg";
 import { Hero } from "./components/Hero/Hero";
 import "./App.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Solution = {
   icon: LucideIcon;
   name: string;
   strong: string;
+  description: string;
+};
+
+type AiFeature = {
+  icon: LucideIcon;
+  title: string;
   description: string;
 };
 
@@ -63,12 +78,117 @@ const solutions: Solution[] = [
   },
 ];
 
+const aiFeatures: AiFeature[] = [
+  {
+    icon: Headset,
+    title: "Plataforma de atendimento",
+    description:
+      "Atenda em vários canais com uma plataforma unificada e fácil de usar. Organize seu time, automatize conversas e escale com mais fluidez.",
+  },
+  {
+    icon: Bot,
+    title: "Agentes inteligentes",
+    description:
+      "Automatize o atendimento com agentes que falam com seus clientes, executam tarefas e se conectam aos seus sistemas. Sempre com a cara da sua marca.",
+  },
+  {
+    icon: Puzzle,
+    title: "Integrações inteligentes",
+    description:
+      "Conecte CRMs, ERPs e plataformas web de forma simples. Elimine retrabalho, acelere processos e tenha dados fluindo entre os sistemas certos.",
+  },
+  {
+    icon: Zap,
+    title: "Automações inteligentes",
+    description:
+      "Crie fluxos com IA que decide em tempo real. Torne seus processos mais ágeis, personalizados e eficientes, sem erro e com menos esforço.",
+  },
+];
+
 function App() {
+  const aiSectionRef = useRef<HTMLElement>(null);
+  const aiBackgroundRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const section = aiSectionRef.current;
+    const background = aiBackgroundRef.current;
+
+    if (!section || !background) return;
+
+    const media = gsap.matchMedia();
+    const ctx = gsap.context(() => {
+      media.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(background, { clearProps: "all" });
+      });
+
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.fromTo(
+          background,
+          { yPercent: -10, scale: 1 },
+          {
+            yPercent: 10,
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.85,
+            },
+          },
+        );
+      });
+    }, section);
+
+    return () => {
+      media.revert();
+      ctx.revert();
+    };
+  }, []);
+
   return (
     <>
       <Hero />
 
       <main>
+        <section
+          ref={aiSectionRef}
+          className="ai-section"
+          aria-labelledby="ai-title"
+          data-header-theme="dark"
+        >
+          <div className="ai-section__background" aria-hidden="true">
+            <img ref={aiBackgroundRef} src={bgIa} alt="" />
+          </div>
+
+          <div className="ai-section__inner">
+            <p className="ai-section__eyebrow">
+              <span>PATH</span>
+              <strong>IA</strong>
+            </p>
+            <h2 id="ai-title" className="ai-section__title">
+              <span>Inteligência</span> aplicada para negócios
+              <br />
+              que querem ir <span>além.</span>
+            </h2>
+
+            <div className="ai-section__grid">
+              {aiFeatures.map((feature) => (
+                <article className="ai-feature" key={feature.title}>
+                  <div className="ai-feature__icon" aria-hidden="true">
+                    <feature.icon />
+                  </div>
+
+                  <div className="ai-feature__copy">
+                    <h3>{feature.title}</h3>
+                    <p>{feature.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section id="solucoes" className="solutions-section" aria-labelledby="solutions-title">
           <h2 id="solutions-title" className="sr-only">
             Nossas soluções

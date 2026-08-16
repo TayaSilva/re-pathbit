@@ -49,7 +49,12 @@ export function Hero() {
 
       if (!hero || !header) return;
 
-      setIsHeaderOnLight(hero.getBoundingClientRect().bottom <= header.offsetHeight + 8);
+      const probeY = header.offsetHeight + 8;
+      const elementBelowHeader = document.elementFromPoint(window.innerWidth / 2, probeY);
+      const isOverDarkSection = Boolean(elementBelowHeader?.closest('[data-header-theme="dark"]'));
+      const isPastHero = hero.getBoundingClientRect().bottom <= probeY;
+
+      setIsHeaderOnLight(isPastHero && !isOverDarkSection);
     };
 
     updateHeaderState();
