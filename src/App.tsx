@@ -15,6 +15,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import bgIa from "./assets/images/bg-ia.jpeg";
+import talentImage1 from "./assets/images/img1.webp";
+import talentImage2 from "./assets/images/img2.webp";
+import talentImage3 from "./assets/images/img3.webp";
 import { Hero } from "./components/Hero/Hero";
 import "./App.css";
 
@@ -29,6 +32,11 @@ type Solution = {
 
 type AiFeature = {
   icon: LucideIcon;
+  title: string;
+  description: string;
+};
+
+type TalentCard = {
   title: string;
   description: string;
 };
@@ -105,40 +113,86 @@ const aiFeatures: AiFeature[] = [
   },
 ];
 
+const talentCards: TalentCard[] = [
+  {
+    title: "Squads para escalar com autonomia e velocidade.",
+    description:
+      "Montamos times completos pra tocar seu projeto do início ao fim. Com o Product Build, entregamos com agilidade, consistência e visão de negócio.",
+  },
+  {
+    title: "Talentos prontos para a sua operação.",
+    description:
+      "Conectamos profissionais ao seu projeto com agilidade. Seleção, alocação e acompanhamento com foco em resultado e parceria duradoura.",
+  },
+  {
+    title: "Soluções pontuais para demandas específicas.",
+    description:
+      "Precisa de ajuda rápida? Contamos com especialistas pra resolver desafios técnicos ou consultivos, sob medida para o seu projeto.",
+  },
+];
+
 function App() {
   const aiSectionRef = useRef<HTMLElement>(null);
   const aiBackgroundRef = useRef<HTMLImageElement>(null);
+  const talentSectionRef = useRef<HTMLElement>(null);
+  const talentImageRefs = useRef<HTMLImageElement[]>([]);
 
   useEffect(() => {
-    const section = aiSectionRef.current;
-    const background = aiBackgroundRef.current;
+    const aiSection = aiSectionRef.current;
+    const aiBackground = aiBackgroundRef.current;
+    const talentSection = talentSectionRef.current;
+    const talentImages = talentImageRefs.current.filter(Boolean);
 
-    if (!section || !background) return;
+    if ((!aiSection || !aiBackground) && (!talentSection || talentImages.length === 0)) return;
 
     const media = gsap.matchMedia();
     const ctx = gsap.context(() => {
       media.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set(background, { clearProps: "all" });
+        if (aiBackground) {
+          gsap.set(aiBackground, { clearProps: "all" });
+        }
+
+        gsap.set(talentImages, { clearProps: "all" });
       });
 
       media.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.fromTo(
-          background,
-          { yPercent: -10, scale: 1 },
-          {
-            yPercent: 10,
-            scale: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 0.85,
+        if (aiSection && aiBackground) {
+          gsap.fromTo(
+            aiBackground,
+            { yPercent: -10, scale: 1 },
+            {
+              yPercent: 10,
+              scale: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: aiSection,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.85,
+              },
             },
-          },
-        );
+          );
+        }
+
+        talentImages.forEach((image, index) => {
+          gsap.fromTo(
+            image,
+            { yPercent: index === 1 ? -12 : -8, scale: 1.12 },
+            {
+              yPercent: index === 1 ? 12 : 8,
+              scale: 1.12,
+              ease: "none",
+              scrollTrigger: {
+                trigger: image.parentElement ?? talentSection,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.9,
+              },
+            },
+          );
+        });
       });
-    }, section);
+    });
 
     return () => {
       media.revert();
@@ -185,6 +239,68 @@ function App() {
                   </div>
                 </article>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section ref={talentSectionRef} className="talent-section" aria-labelledby="talent-title">
+          <div className="talent-section__inner">
+            <p className="talent-section__eyebrow">
+              <span>PATH</span>
+              <strong>TALENT</strong>
+            </p>
+
+            <h2 id="talent-title" className="talent-section__title">
+              Tecnologia com flexibilidade:
+              <br />
+              <span>alocamos, formamos e aceleramos</span> times.
+            </h2>
+
+            <div className="talent-section__grid">
+              <figure className="talent-media talent-media--one">
+                <img
+                  ref={(element) => {
+                    if (element) talentImageRefs.current[0] = element;
+                  }}
+                  src={talentImage1}
+                  alt="Profissional trabalhando com notebook"
+                />
+              </figure>
+
+              <article className="talent-card talent-card--squads">
+                <h3>{talentCards[0].title}</h3>
+                <p>{talentCards[0].description}</p>
+              </article>
+
+              <figure className="talent-media talent-media--two">
+                <img
+                  ref={(element) => {
+                    if (element) talentImageRefs.current[1] = element;
+                  }}
+                  src={talentImage2}
+                  alt="Equipe planejando entregas em quadro de notas"
+                />
+              </figure>
+
+              <article className="talent-card talent-card--professionals">
+                <h3>{talentCards[1].title}</h3>
+                <p>{talentCards[1].description}</p>
+              </article>
+
+              <figure className="talent-media talent-media--three">
+                <img
+                  ref={(element) => {
+                    if (element) talentImageRefs.current[2] = element;
+                  }}
+                  src={talentImage3}
+                  alt="Time colaborando em uma mesa com notebook"
+                />
+              </figure>
+
+              <article className="talent-card talent-card--solutions">
+                <h3>{talentCards[2].title}</h3>
+                <p>{talentCards[2].description}</p>
+              </article>
             </div>
           </div>
         </section>
