@@ -1,13 +1,260 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pathbit-site</title>
+    <meta
+      name="description"
+      content="A Pathbit cria soluções digitais com tecnologia, estratégia, inteligência artificial e squads sob medida para acelerar negócios."
+    />
+    <title>Pathbit | Tecnologia, IA e soluções digitais</title>
+    <link rel="stylesheet" href="/src/index.css" />
+    <link rel="stylesheet" href="/src/components/Hero/Hero.css" />
+    <link rel="stylesheet" href="/src/App.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <section class="hero">
+      <div class="hero__parallax">
+        <div class="hero__infinite-background">
+          <div class="hero__scene hero__scene--a">
+            <img src="/src/assets/images/network-bg.png" class="hero__image" alt="" />
+            <div class="network-lights" aria-hidden="true"></div>
+          </div>
+
+          <div class="hero__scene hero__scene--b">
+            <img src="/src/assets/images/network-bg.png" class="hero__image" alt="" />
+            <div class="network-lights" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__overlay"></div>
+
+      <header class="hero__header">
+        <a class="hero__brand" href="/" aria-label="Pathbit">
+          <img class="hero__brand-symbol" src="/src/assets/images/pathbit-symbol.svg.svg" alt="" />
+          <img class="hero__brand-logo" src="/src/assets/images/logo.svg" alt="" />
+        </a>
+
+        <nav class="hero__nav" aria-label="Navegação principal">
+          <a href="#solucoes">Nossas soluções</a>
+          <a href="#contato">Fale com a Path</a>
+        </nav>
+      </header>
+
+      <div class="hero__content">
+        <h1 class="hero__title">
+          <span class="hero__title-line">Criamos o futuro</span>
+          <span class="hero__title-line hero__title-line--dynamic">
+            <span class="hero__title-static">com</span>
+            <span class="hero__dynamic">
+              <span class="hero__cursor" aria-hidden="true">|</span>
+              <span class="hero__word"></span>
+            </span>
+          </span>
+        </h1>
+
+        <p class="hero__description">
+          Transformamos desafios em soluções que impulsionam negócios.
+        </p>
+      </div>
+
+      <a class="hero__explore" href="#solucoes">
+        <span class="hero__explore-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+        </span>
+        explore nossas solucoes
+      </a>
+    </section>
+
+    <main>
+      <section class="ai-section" aria-labelledby="ai-title" data-header-theme="dark">
+        <div class="ai-section__background" aria-hidden="true">
+          <img src="/src/assets/images/bg-ia.jpeg" alt="" />
+        </div>
+
+        <div class="ai-section__inner">
+          <p class="ai-section__eyebrow">
+            <span>PATH</span><strong>IA</strong>
+          </p>
+          <h2 id="ai-title" class="ai-section__title">
+            <span>Inteligência</span> aplicada para negócios
+            <br />
+            que querem ir <span>além.</span>
+          </h2>
+
+          <div class="ai-section__grid">
+            <article class="ai-feature">
+              <div class="ai-feature__icon" aria-hidden="true">
+                <i data-lucide="headset"></i>
+              </div>
+              <div class="ai-feature__copy">
+                <h3>Plataforma de atendimento</h3>
+                <p>Atenda em vários canais com uma plataforma unificada e fácil de usar. Organize seu time, automatize conversas e escale com mais fluidez.</p>
+              </div>
+            </article>
+
+            <article class="ai-feature">
+              <div class="ai-feature__icon" aria-hidden="true">
+                <i data-lucide="bot-message-square"></i>
+              </div>
+              <div class="ai-feature__copy">
+                <h3>Agentes inteligentes</h3>
+                <p>Automatize o atendimento com agentes que falam com seus clientes, executam tarefas e se conectam aos seus sistemas. Sempre com a cara da sua marca.</p>
+              </div>
+            </article>
+
+            <article class="ai-feature">
+              <div class="ai-feature__icon" aria-hidden="true">
+                <i data-lucide="plug-zap"></i>
+              </div>
+              <div class="ai-feature__copy">
+                <h3>Integrações inteligentes</h3>
+                <p>Conecte CRMs, ERPs e plataformas web de forma simples. Elimine retrabalho, acelere processos e tenha dados fluindo entre os sistemas certos.</p>
+              </div>
+            </article>
+
+            <article class="ai-feature">
+              <div class="ai-feature__icon" aria-hidden="true">
+                <i data-lucide="workflow"></i>
+              </div>
+              <div class="ai-feature__copy">
+                <h3>Automações inteligentes</h3>
+                <p>Crie fluxos com IA que decide em tempo real. Torne seus processos mais ágeis, personalizados e eficientes, sem erro e com menos esforço.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="talent-section" aria-labelledby="talent-title">
+        <div class="talent-section__inner">
+          <p class="talent-section__eyebrow">
+            <span>PATH</span><strong>TALENT</strong>
+          </p>
+
+          <h2 id="talent-title" class="talent-section__title">
+            Tecnologia com flexibilidade:
+            <br />
+            <span>alocamos, formamos e aceleramos</span> times.
+          </h2>
+
+          <div class="talent-section__grid">
+            <figure class="talent-media talent-media--one">
+              <img src="/src/assets/images/img1.webp" alt="Profissional trabalhando com notebook" />
+            </figure>
+
+            <article class="talent-card talent-card--squads">
+              <h3>Squads para escalar com autonomia e velocidade.</h3>
+              <p>Montamos times completos pra tocar seu projeto do início ao fim. Com o Product Build, entregamos com agilidade, consistência e visão de negócio.</p>
+            </article>
+
+            <figure class="talent-media talent-media--two">
+              <img src="/src/assets/images/img2.webp" alt="Equipe planejando entregas em quadro de notas" />
+            </figure>
+
+            <article class="talent-card talent-card--professionals">
+              <h3>Talentos prontos para a sua operação.</h3>
+              <p>Conectamos profissionais ao seu projeto com agilidade. Seleção, alocação e acompanhamento com foco em resultado e parceria duradoura.</p>
+            </article>
+
+            <figure class="talent-media talent-media--three">
+              <img src="/src/assets/images/img3.webp" alt="Time colaborando em uma mesa com notebook" />
+            </figure>
+
+            <article class="talent-card talent-card--solutions">
+              <h3>Soluções pontuais para demandas específicas.</h3>
+              <p>Precisa de ajuda rápida? Contamos com especialistas pra resolver desafios técnicos ou consultivos, sob medida para o seu projeto.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="studios-section" aria-labelledby="studios-title" data-header-theme="dark">
+        <div class="studios-section__inner">
+          <p class="studios-section__eyebrow">
+            <span>PATH</span><strong>STUDIOS</strong>
+          </p>
+
+          <h2 id="studios-title" class="studios-section__title">
+            <span>Nossa experiência vira entrega:</span>
+            <strong>soluções para escalar.</strong>
+          </h2>
+        </div>
+      </section>
+
+      <section id="solucoes" class="solutions-section" aria-labelledby="solutions-title">
+        <h2 id="solutions-title" class="sr-only">Nossas soluções</h2>
+
+        <div class="solutions-grid">
+          <article class="solution-card">
+            <i class="solution-card__icon" data-lucide="bot-message-square" aria-hidden="true"></i>
+            <h3>PATH<strong>IA</strong></h3>
+            <p>Desenvolvemos agentes, automações e integrações que escalam o atendimento e otimizam o dia a dia com IA.</p>
+          </article>
+
+          <article class="solution-card">
+            <i class="solution-card__icon" data-lucide="users-round" aria-hidden="true"></i>
+            <h3>PATH<strong>TALENT</strong></h3>
+            <p>Alocamos talentos, formamos profissionais e montamos squads sob medida, com foco em qualidade e parceria duradoura.</p>
+          </article>
+
+          <article class="solution-card">
+            <i class="solution-card__icon" data-lucide="code-xml" aria-hidden="true"></i>
+            <h3>PATH<strong>STUDIOS</strong></h3>
+            <p>Nossa consultoria tech apoia seu time com domínio técnico e visão de produto em várias especialidades do dia a dia real.</p>
+          </article>
+
+          <article class="solution-card">
+            <i class="solution-card__icon" data-lucide="monitor-smartphone" aria-hidden="true"></i>
+            <h3>PATH<strong>BUILD</strong></h3>
+            <p>Produtos digitais sob medida, com visão de negócio e excelência técnica. Da ideia à entrega, tudo no ritmo da sua empresa.</p>
+          </article>
+
+          <article class="solution-card">
+            <i class="solution-card__icon" data-lucide="lightbulb" aria-hidden="true"></i>
+            <h3>PATH<strong>LAB</strong></h3>
+            <p>Design com propósito. Conectamos marca e experiência para criar produtos intuitivos, belos e que entregam resultado de verdade.</p>
+          </article>
+
+          <article class="solution-card">
+            <i class="solution-card__icon" data-lucide="chart-line" aria-hidden="true"></i>
+            <h3>PATH<strong>FIN</strong></h3>
+            <p>Use nossa experiência no mercado financeiro para automatizar processos, otimizar e melhorar a jornada do investidor.</p>
+          </article>
+        </div>
+
+        <div id="contato" class="solutions-cta">
+          <h2>É hora de inovar!</h2>
+          <p>Transformamos desafios em soluções digitais simples, seguras e feitas pra acompanhar o crescimento da sua empresa.</p>
+          <a
+            class="solutions-cta__button"
+            href="https://api.whatsapp.com/send/?phone=551152866569&text&type=phone_number&app_absent=0"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>Fale com a Path</span>
+            <i data-lucide="arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <a
+      class="whatsapp-float"
+      href="https://api.whatsapp.com/send/?phone=551152866569&text&type=phone_number&app_absent=0"
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Fale com a Pathbit pelo WhatsApp"
+    >
+      <svg class="whatsapp-float__icon" viewBox="0 0 448 512" aria-hidden="true">
+        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32 101 32 1.2 131.8 1.2 254.8c0 39.3 10.3 77.7 29.8 111.5L0 480l116.5-30.6c32.5 17.7 69.1 27 106.9 27h.1c122.9 0 222.7-99.8 222.8-222.7 0-59.5-23.1-115.3-65.4-156.6ZM223.5 438.8h-.1c-33.7 0-66.7-9.1-95.4-26.2l-6.9-4.1-69.1 18.1 18.5-67.3-4.5-6.9c-18.7-29.7-28.6-63.9-28.6-97.6C37.4 152.6 120.7 69.3 223.9 69.3c49.7 0 96.5 19.4 131.7 54.6 35.2 35.3 54.5 82.1 54.5 131.8-.1 103.1-83.4 183.1-186.6 183.1Zm101.3-138.7c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.5-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-65.9-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.5-19.4 19-19.4 46.3s19.9 53.7 22.7 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.6-6.7Z" />
+      </svg>
+    </a>
+
+    <script src="https://unpkg.com/lucide@1.28.0/dist/umd/lucide.min.js"></script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>

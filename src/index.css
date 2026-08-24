@@ -20,6 +20,7 @@ body {
   padding: 0;
 
   min-width: 320px;
+  overflow-x: hidden;
 
   font-family:
     Inter,
@@ -36,4 +37,13 @@ body {
 button,
 a {
   font: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#solucoes,
+#contato {
+  scroll-margin-top: 120px;
 }

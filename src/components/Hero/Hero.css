@@ -621,7 +621,7 @@
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 650px;
+    min-height: 720px;
   }
 
   .hero__parallax {
@@ -689,5 +689,117 @@
         transparent 42%,
         rgba(1, 4, 12, 0.45) 100%
       );
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    align-items: flex-end;
+    min-height: 100svh;
+    min-height: 760px;
+    padding-top: 118px;
+  }
+
+  .hero__header {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    min-height: auto;
+    padding: 14px 16px 12px;
+  }
+
+  .hero__brand {
+    height: auto;
+  }
+
+  .hero__brand-symbol {
+    width: 24px;
+  }
+
+  .hero__brand-logo {
+    width: 78px;
+    height: auto;
+  }
+
+  .hero__nav {
+    justify-content: center;
+    gap: 10px;
+    max-width: none;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .hero__nav a {
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .hero__header--light .hero__nav a {
+    border-color: rgba(2, 6, 23, 0.08);
+    background: rgba(255, 255, 255, 0.65);
+  }
+
+  .hero__content {
+    width: calc(100% - 32px);
+    padding-top: 0;
+    padding-bottom: 84px;
+    text-align: center;
+  }
+
+  .hero__title {
+    grid-template-rows: none;
+    justify-items: center;
+    row-gap: 0.12em;
+    height: auto;
+    font-size: clamp(38px, 12vw, 56px);
+  }
+
+  .hero__title-line {
+    justify-content: center;
+    height: auto;
+    white-space: normal;
+  }
+
+  .hero__title-line--dynamic {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    height: auto;
+    line-height: 1.06;
+  }
+
+  .hero__title-static,
+  .hero__dynamic,
+  .hero__word {
+    height: auto;
+    line-height: 1.06;
+  }
+
+  .hero__dynamic {
+    justify-content: center;
+    min-width: 0;
+    min-height: 1.1em;
+  }
+
+  .hero__cursor {
+    margin-right: 0.02em;
+  }
+
+  .hero__description {
+    max-width: 32ch;
+    margin: 22px auto 0;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .hero__explore {
+    bottom: 20px;
+  }
+
+  .hero__explore-icon {
+    width: 22px;
+    height: 20px;
   }
 }
