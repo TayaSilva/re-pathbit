@@ -88,6 +88,51 @@ const WHITE_STARS = [
   { left: 91, top: 44, size: 1.7, duration: 3.6, delay: -1.9, opacity: 0.64 },
 ];
 
+const BUILD_PROJECT_TYPES = {
+  custom: {
+    accentRgb: "135, 92, 255",
+    accentText: "#6f59ff",
+    cards: [
+      {
+        icon: "package",
+        title: "Produto feito para a sua empresa",
+        text: "Criamos produtos sob medida, com base nas necessidades da sua empresa. Aderência, eficiência e entregas com foco total em resultado.",
+      },
+      {
+        icon: "rocket",
+        title: "Acompanhamento de ponta a ponta",
+        text: "Você acompanha cada etapa do projeto com clareza. Prazos, decisões e entregas sempre visíveis, do início até a finalização.",
+      },
+      {
+        icon: "braces",
+        title: "Tecnologia que é toda sua",
+        text: "A tecnologia é sua. Código, infraestrutura e entregáveis ficam disponíveis para escalar, manter ou evoluir no ritmo do seu negócio.",
+      },
+    ],
+  },
+  collaborative: {
+    accentRgb: "39, 209, 165",
+    accentText: "#1fb9b0",
+    cards: [
+      {
+        icon: "users-round",
+        title: "Solução pensada com o mercado",
+        text: "Criamos juntos soluções baseadas em dores reais do setor, combinando conhecimento técnico com experiência prática.",
+      },
+      {
+        icon: "trending-up",
+        title: "Investimento leve, resultado alto",
+        text: "Com investimento compartilhado, o projeto sai do papel com menos barreiras. Um modelo mais ágil, acessível e com alto impacto.",
+      },
+      {
+        icon: "layers-3",
+        title: "Uso que vai além da empresa",
+        text: "A solução pode ser usada por você e pela Pathbit. Isso amplia o valor gerado e cria mais possibilidades de uso e crescimento.",
+      },
+    ],
+  },
+};
+
 function setupLucideIcons() {
   if (!window.lucide?.icons) return;
 
@@ -263,6 +308,77 @@ function setupTypedHero() {
   tick();
 }
 
+function setupBuildTabs() {
+  const tabs = document.querySelector(".build-tabs");
+  const cardHost = document.querySelector(".build-cards");
+
+  if (!tabs || !cardHost) return;
+
+  const buttons = [...tabs.querySelectorAll(".build-tabs__button")];
+  let activeTab = tabs.dataset.activeTab in BUILD_PROJECT_TYPES ? tabs.dataset.activeTab : "custom";
+
+  const renderCards = (tabKey) => {
+    const projectType = BUILD_PROJECT_TYPES[tabKey];
+
+    if (!projectType) return;
+
+    cardHost.innerHTML = projectType.cards
+      .map(
+        (card) => `
+          <article class="build-card is-entering" style="--build-card-accent-rgb: ${projectType.accentRgb}; --build-card-accent: ${projectType.accentText};">
+            <div class="build-card__icon" aria-hidden="true">
+              <i data-lucide="${card.icon}"></i>
+            </div>
+            <h3>${card.title}</h3>
+            <p>${card.text}</p>
+          </article>
+        `,
+      )
+      .join("");
+
+    if (window.lucide?.createIcons) {
+      window.lucide.createIcons({
+        icons: window.lucide.icons,
+        attrs: {
+          "aria-hidden": "true",
+        },
+      });
+    }
+  };
+
+  const syncTabs = (tabKey) => {
+    const projectType = BUILD_PROJECT_TYPES[tabKey];
+
+    if (!projectType) return;
+
+    tabs.dataset.activeTab = tabKey;
+    tabs.style.setProperty("--build-indicator-x", tabKey === "collaborative" ? "100%" : "0%");
+    tabs.style.setProperty("--build-accent-rgb", projectType.accentRgb);
+    tabs.style.setProperty("--build-accent-text", projectType.accentText);
+
+    buttons.forEach((button) => {
+      const isActive = button.dataset.tab === tabKey;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-selected", String(isActive));
+    });
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const nextTab = button.dataset.tab;
+
+      if (!nextTab || nextTab === activeTab) return;
+
+      activeTab = nextTab;
+      syncTabs(activeTab);
+      renderCards(activeTab);
+    });
+  });
+
+  syncTabs(activeTab);
+  renderCards(activeTab);
+}
+
 function setupGsapAnimations() {
   const hero = document.querySelector(".hero");
   const sceneA = document.querySelector(".hero__scene--a");
@@ -355,4 +471,5 @@ setupNetworkLights();
 setupLucideIcons();
 setupHeader();
 setupTypedHero();
+setupBuildTabs();
 setupGsapAnimations();
