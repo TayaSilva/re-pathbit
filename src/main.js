@@ -308,6 +308,64 @@ function setupTypedHero() {
   tick();
 }
 
+function setupSmoothAnchorScroll() {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const links = [...document.querySelectorAll('a[href^="#"]')];
+
+  if (!links.length) return;
+
+  const getHeaderOffset = () => {
+    const header = document.querySelector(".hero__header");
+    return header ? header.offsetHeight + 24 : 120;
+  };
+
+  const getTargetTop = (target) => {
+    const styles = window.getComputedStyle(target);
+    const scrollMarginTop = Number.parseFloat(styles.scrollMarginTop) || getHeaderOffset();
+    return target.getBoundingClientRect().top + window.scrollY - scrollMarginTop;
+  };
+
+  const easeInOutCubic = (progress) =>
+    progress < 0.5 ? 4 * progress * progress * progress : 1 - ((-2 * progress + 2) ** 3) / 2;
+
+  links.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const hash = link.getAttribute("href");
+
+      if (!hash || hash === "#") return;
+
+      const target = document.querySelector(hash);
+
+      if (!target || prefersReducedMotion.matches) return;
+
+      event.preventDefault();
+
+      const startY = window.scrollY;
+      const targetY = getTargetTop(target);
+      const distance = targetY - startY;
+      const duration = Math.min(1100, Math.max(520, Math.abs(distance) * 0.55));
+      const startTime = performance.now();
+
+      const step = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easedProgress = easeInOutCubic(progress);
+
+        window.scrollTo(0, startY + distance * easedProgress);
+
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+          return;
+        }
+
+        history.replaceState(null, "", hash);
+      };
+
+      window.requestAnimationFrame(step);
+    });
+  });
+}
+
 function setupBuildTabs() {
   const tabs = document.querySelector(".build-tabs");
   const cardHost = document.querySelector(".build-cards");
@@ -379,6 +437,361 @@ function setupBuildTabs() {
   renderCards(activeTab);
 }
 
+function setupLegalTabs() {
+  const tabs = document.querySelector(".legal-tabs");
+  const panels = [...document.querySelectorAll("[data-legal-panel]")];
+
+  if (!tabs || !panels.length) return;
+
+  const buttons = [...tabs.querySelectorAll(".build-tabs__button")];
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const allowedTabs = new Set(panels.map((panel) => panel.dataset.legalPanel).filter(Boolean));
+  const getHashTab = () => window.location.hash.replace("#", "");
+  const formatSectionNumber = (value) => String(value).padStart(2, "0");
+  const getScrollOffset = () => (window.innerWidth <= 900 ? 92 : 36);
+
+  const closeToc = (state) => {
+    if (!state?.tocCard || !state?.tocToggle) return;
+
+    state.tocCard.classList.remove("is-open");
+    state.tocToggle.setAttribute("aria-expanded", "false");
+  };
+
+  const setActiveSectionLink = (state, sectionId) => {
+    if (!state?.tocLinks?.length) return;
+
+    state.activeSectionId = sectionId;
+
+    state.tocLinks.forEach((link) => {
+      link.classList.toggle("is-active", link.dataset.target === sectionId);
+    });
+  };
+
+  const buildPanelState = (panel) => {
+    const richtext = panel.querySelector(".legal-richtext");
+    const tocList = panel.querySelector("[data-legal-toc-list]");
+    const tocCard = panel.querySelector("[data-legal-toc-card]");
+    const tocToggle = panel.querySelector("[data-legal-toc-toggle]");
+
+    if (!richtext || !tocList || !tocCard || !tocToggle) {
+      return {
+        panel,
+        sections: [],
+        tocLinks: [],
+        tocCard,
+        tocToggle,
+        observer: null,
+      };
+    }
+
+    const elements = [...richtext.children];
+    const introNodes = [];
+    const groupedSections = [];
+    let currentSection = null;
+
+    elements.forEach((element) => {
+      if (element.tagName === "H3") {
+        currentSection = {
+          heading: element,
+          nodes: [],
+        };
+        groupedSections.push(currentSection);
+        return;
+      }
+
+      if (!currentSection) {
+        introNodes.push(element);
+        return;
+      }
+
+      currentSection.nodes.push(element);
+    });
+
+    richtext.replaceChildren();
+    tocList.replaceChildren();
+
+    if (introNodes.length) {
+      const intro = document.createElement("div");
+      intro.className = "legal-doc-intro";
+      introNodes.forEach((node) => intro.append(node));
+      richtext.append(intro);
+    }
+
+    const sections = groupedSections.map((group, index) => {
+      const sectionNumber = formatSectionNumber(index + 1);
+      const title = group.heading.textContent.trim();
+      const sectionId = `legal-${panel.dataset.legalPanel}-section-${index + 1}`;
+      const wrapper = document.createElement("section");
+      const header = document.createElement("div");
+      const badge = document.createElement("span");
+      const body = document.createElement("div");
+      const tocButton = document.createElement("button");
+
+      wrapper.className = "legal-doc-section";
+      wrapper.id = sectionId;
+
+      header.className = "legal-doc-section__head";
+      badge.className = "legal-doc-section__index";
+      badge.textContent = sectionNumber;
+
+      group.heading.className = "legal-doc-section__title";
+      body.className = "legal-doc-section__body";
+
+      header.append(badge, group.heading);
+      group.nodes.forEach((node) => body.append(node));
+      wrapper.append(header, body);
+      richtext.append(wrapper);
+
+      tocButton.type = "button";
+      tocButton.className = "legal-toc__link";
+      tocButton.dataset.target = sectionId;
+      tocButton.innerHTML = `
+        <span class="legal-toc__number">${sectionNumber}</span>
+        <span class="legal-toc__text">${title}</span>
+      `;
+
+      tocList.append(tocButton);
+
+      return {
+        id: sectionId,
+        title,
+        element: wrapper,
+        tocButton,
+      };
+    });
+
+    tocToggle.addEventListener("click", () => {
+      const isOpen = tocCard.classList.toggle("is-open");
+      tocToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    const state = {
+      panel,
+      sections,
+      tocLinks: sections.map((section) => section.tocButton),
+      tocCard,
+      tocToggle,
+      observer: null,
+      activeSectionId: sections[0]?.id ?? "",
+    };
+
+    sections.forEach((section) => {
+      section.tocButton.addEventListener("click", () => {
+        const targetSection = panel.querySelector(`#${section.id}`);
+
+        if (!targetSection) return;
+
+        const targetTop = targetSection.getBoundingClientRect().top + window.scrollY - getScrollOffset();
+
+        window.scrollTo({
+          top: targetTop,
+          behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+        });
+
+        setActiveSectionLink(state, section.id);
+
+        if (window.innerWidth <= 900) {
+          closeToc(state);
+        }
+      });
+    });
+
+    setActiveSectionLink(state, state.activeSectionId);
+
+    return state;
+  };
+
+  const panelStates = panels.map(buildPanelState);
+  const panelStateByKey = new Map(
+    panelStates
+      .map((state) => [state.panel.dataset.legalPanel, state])
+      .filter((entry) => Boolean(entry[0])),
+  );
+
+  let currentPanelState = null;
+
+  const connectObserver = (state) => {
+    if (!state?.sections?.length) return;
+
+    state.observer?.disconnect();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((entryA, entryB) => entryB.intersectionRatio - entryA.intersectionRatio);
+
+        if (visibleEntries.length) {
+          setActiveSectionLink(state, visibleEntries[0].target.id);
+          return;
+        }
+
+        const passedSections = state.sections.filter(
+          (section) => section.element.getBoundingClientRect().top <= getScrollOffset() + 72,
+        );
+
+        setActiveSectionLink(state, (passedSections.at(-1) ?? state.sections[0]).id);
+      },
+      {
+        rootMargin: `-${getScrollOffset() + 24}px 0px -55% 0px`,
+        threshold: [0.12, 0.28, 0.45, 0.68],
+      },
+    );
+
+    state.sections.forEach((section) => observer.observe(section.element));
+    state.observer = observer;
+    setActiveSectionLink(state, state.activeSectionId || state.sections[0].id);
+  };
+
+  let activeTab = allowedTabs.has(getHashTab())
+    ? getHashTab()
+    : allowedTabs.has(tabs.dataset.activeTab)
+      ? tabs.dataset.activeTab
+      : panels[0].dataset.legalPanel;
+
+  const syncTabs = (tabKey) => {
+    const activeButtonIndex = buttons.findIndex((button) => button.dataset.tab === tabKey);
+    const nextPanelState = panelStateByKey.get(tabKey) ?? null;
+
+    tabs.dataset.activeTab = tabKey;
+    tabs.style.setProperty("--build-indicator-x", activeButtonIndex === 1 ? "100%" : "0%");
+
+    buttons.forEach((button) => {
+      const isActive = button.dataset.tab === tabKey;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-selected", String(isActive));
+      button.setAttribute("tabindex", isActive ? "0" : "-1");
+    });
+
+    panels.forEach((panel) => {
+      const isActive = panel.dataset.legalPanel === tabKey;
+      panel.classList.toggle("is-active", isActive);
+      panel.hidden = !isActive;
+      panel.setAttribute("tabindex", isActive ? "0" : "-1");
+    });
+
+    if (currentPanelState?.observer) {
+      currentPanelState.observer.disconnect();
+    }
+
+    panelStates.forEach((state) => closeToc(state));
+
+    currentPanelState = nextPanelState;
+    connectObserver(currentPanelState);
+  };
+
+  const activateTab = (tabKey, updateHash = true) => {
+    if (!allowedTabs.has(tabKey)) return;
+
+    activeTab = tabKey;
+    syncTabs(activeTab);
+
+    if (updateHash) {
+      history.replaceState(null, "", `#${tabKey}`);
+    }
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const nextTab = button.dataset.tab;
+
+      if (!nextTab) return;
+
+      activateTab(nextTab);
+    });
+  });
+
+  tabs.addEventListener("keydown", (event) => {
+    const currentIndex = buttons.findIndex((button) => button.dataset.tab === activeTab);
+    const isHorizontalArrow = event.key === "ArrowRight" || event.key === "ArrowLeft";
+
+    if (!isHorizontalArrow && event.key !== "Home" && event.key !== "End") return;
+
+    event.preventDefault();
+
+    if (event.key === "Home") {
+      buttons[0]?.focus();
+      activateTab(buttons[0]?.dataset.tab ?? activeTab);
+      return;
+    }
+
+    if (event.key === "End") {
+      buttons.at(-1)?.focus();
+      activateTab(buttons.at(-1)?.dataset.tab ?? activeTab);
+      return;
+    }
+
+    const direction = event.key === "ArrowRight" ? 1 : -1;
+    const nextIndex = (currentIndex + direction + buttons.length) % buttons.length;
+    const nextButton = buttons[nextIndex];
+
+    if (!nextButton?.dataset.tab) return;
+
+    nextButton.focus();
+    activateTab(nextButton.dataset.tab);
+  });
+
+  window.addEventListener("hashchange", () => {
+    const hashTab = getHashTab();
+
+    if (!allowedTabs.has(hashTab)) return;
+
+    activateTab(hashTab, false);
+  });
+
+  window.addEventListener("resize", () => {
+    if (!currentPanelState) return;
+
+    closeToc(currentPanelState);
+    connectObserver(currentPanelState);
+  });
+
+  syncTabs(activeTab);
+}
+
+function setupInteractiveProjectGroup(containerSelector, cardSelector) {
+  const container = document.querySelector(containerSelector);
+
+  if (!container) return;
+
+  const cards = [...container.querySelectorAll(cardSelector)];
+
+  if (!cards.length) return;
+
+  const defaultCard = cards[0];
+
+  const setActive = (nextCard) => {
+    cards.forEach((card) => {
+      card.classList.toggle("is-active", card === nextCard);
+    });
+  };
+
+  cards.forEach((card) => {
+    card.addEventListener("pointerenter", () => setActive(card));
+    card.addEventListener("focus", () => setActive(card));
+  });
+
+  container.addEventListener("pointerleave", () => setActive(defaultCard));
+
+  container.addEventListener("focusout", () => {
+    window.requestAnimationFrame(() => {
+      if (!container.contains(document.activeElement)) {
+        setActive(defaultCard);
+      }
+    });
+  });
+
+  setActive(defaultCard);
+}
+
+function setupLabProjects() {
+  setupInteractiveProjectGroup(".lab-projects", "[data-lab-project]");
+}
+
+function setupTalentProjects() {
+  setupInteractiveProjectGroup(".talent-projects", "[data-interactive-project]");
+}
+
 function setupGsapAnimations() {
   const hero = document.querySelector(".hero");
   const sceneA = document.querySelector(".hero__scene--a");
@@ -439,6 +852,18 @@ function setupGsapAnimations() {
   });
 }
 
+function setupFooterYear() {
+  const yearElements = [...document.querySelectorAll("[data-current-year]")];
+
+  if (!yearElements.length) return;
+
+  const currentYear = new Date().getFullYear();
+
+  yearElements.forEach((element) => {
+    element.textContent = currentYear;
+  });
+}
+
 function createHeroScrollParallax(hero, content, explore, contentY) {
   if (!hero || !content || !explore) return;
 
@@ -471,5 +896,10 @@ setupNetworkLights();
 setupLucideIcons();
 setupHeader();
 setupTypedHero();
+setupSmoothAnchorScroll();
 setupBuildTabs();
+setupLegalTabs();
+setupLabProjects();
+setupTalentProjects();
 setupGsapAnimations();
+setupFooterYear();
