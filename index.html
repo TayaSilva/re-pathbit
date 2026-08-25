@@ -37,9 +37,21 @@
           <img class="hero__brand-logo" src="/src/assets/images/logo.svg" alt="" />
         </a>
 
-        <nav class="hero__nav" aria-label="Navegação principal">
+        <button
+          class="hero__menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="hero-nav"
+          aria-label="Abrir menu principal"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="hero-nav" class="hero__nav" aria-label="Navegação principal">
           <a href="#solucoes">Nossas soluções</a>
-          <a href="#contato">Fale com a Path</a>
+          <a aria-disabled="true">Fale com a Path</a>
         </nav>
       </header>
 
@@ -65,12 +77,12 @@
           <span></span>
           <span></span>
         </span>
-        explore nossas solucoes
+        explore nossas soluções
       </a>
     </section>
 
     <main>
-      <section class="ai-section" aria-labelledby="ai-title" data-header-theme="dark">
+      <section id="pathia" class="ai-section" aria-labelledby="ai-title" data-header-theme="dark">
         <div class="ai-section__background" aria-hidden="true">
           <img src="/src/assets/images/bg-ia.jpeg" alt="" />
         </div>
@@ -129,7 +141,7 @@
         </div>
       </section>
 
-      <section class="talent-section" aria-labelledby="talent-title">
+      <section id="pathtalent" class="talent-section" aria-labelledby="talent-title">
         <div class="talent-section__inner">
           <p class="talent-section__eyebrow">
             <span>PATH</span><strong>TALENT</strong>
@@ -141,38 +153,46 @@
             <span>alocamos, formamos e aceleramos</span> times.
           </h2>
 
-          <div class="talent-section__grid">
-            <figure class="talent-media talent-media--one">
-              <img src="/src/assets/images/img1.webp" alt="Profissional trabalhando com notebook" />
-            </figure>
+          <div class="talent-projects" aria-labelledby="talent-projects-title">
+            <h3 id="talent-projects-title" class="sr-only">Frentes Path Talent</h3>
 
-            <article class="talent-card talent-card--squads">
-              <h3>Squads para escalar com autonomia e velocidade.</h3>
-              <p>Montamos times completos pra tocar seu projeto do início ao fim. Com o Product Build, entregamos com agilidade, consistência e visão de negócio.</p>
-            </article>
+            <button class="talent-project is-active" type="button" data-interactive-project>
+              <img class="talent-project__image" src="/src/assets/images/img1.webp" alt="Profissional trabalhando com notebook" />
+              <span class="talent-project__overlay" aria-hidden="true"></span>
+              <span class="talent-project__content">
+                <span class="talent-project__title">Squads para escalar com autonomia e velocidade.</span>
+                <span class="talent-project__description">
+                  Montamos times completos pra tocar seu projeto do início ao fim. Com o Product Build, entregamos com agilidade, consistência e visão de negócio.
+                </span>
+              </span>
+            </button>
 
-            <figure class="talent-media talent-media--two">
-              <img src="/src/assets/images/img2.webp" alt="Equipe planejando entregas em quadro de notas" />
-            </figure>
+            <button class="talent-project" type="button" data-interactive-project>
+              <img class="talent-project__image" src="/src/assets/images/img2.webp" alt="Equipe planejando entregas em quadro de notas" />
+              <span class="talent-project__overlay" aria-hidden="true"></span>
+              <span class="talent-project__content">
+                <span class="talent-project__title">Talentos prontos para a sua operação.</span>
+                <span class="talent-project__description">
+                  Conectamos profissionais ao seu projeto com agilidade. Seleção, alocação e acompanhamento com foco em resultado e parceria duradoura.
+                </span>
+              </span>
+            </button>
 
-            <article class="talent-card talent-card--professionals">
-              <h3>Talentos prontos para a sua operação.</h3>
-              <p>Conectamos profissionais ao seu projeto com agilidade. Seleção, alocação e acompanhamento com foco em resultado e parceria duradoura.</p>
-            </article>
-
-            <figure class="talent-media talent-media--three">
-              <img src="/src/assets/images/img3.webp" alt="Time colaborando em uma mesa com notebook" />
-            </figure>
-
-            <article class="talent-card talent-card--solutions">
-              <h3>Soluções pontuais para demandas específicas.</h3>
-              <p>Precisa de ajuda rápida? Contamos com especialistas pra resolver desafios técnicos ou consultivos, sob medida para o seu projeto.</p>
-            </article>
+            <button class="talent-project" type="button" data-interactive-project>
+              <img class="talent-project__image" src="/src/assets/images/img3.webp" alt="Time colaborando em uma mesa com notebook" />
+              <span class="talent-project__overlay" aria-hidden="true"></span>
+              <span class="talent-project__content">
+                <span class="talent-project__title">Soluções pontuais para demandas específicas.</span>
+                <span class="talent-project__description">
+                  Precisa de ajuda rápida? Contamos com especialistas pra resolver desafios técnicos ou consultivos, sob medida para o seu projeto.
+                </span>
+              </span>
+            </button>
           </div>
         </div>
       </section>
 
-      <section class="studios-section" aria-labelledby="studios-title" data-header-theme="dark">
+      <section id="pathstudios" class="studios-section" aria-labelledby="studios-title" data-header-theme="dark">
         <div class="studios-section__inner">
           <p class="studios-section__eyebrow">
             <span>PATH</span><strong>STUDIOS</strong>
@@ -240,7 +260,7 @@
         </div>
       </section>
 
-      <section class="build-section" aria-labelledby="build-title">
+      <section id="pathbuild" class="build-section" aria-labelledby="build-title">
         <div class="build-section__inner">
           <p class="build-section__eyebrow">
             <span>PATH</span><strong>BUILD</strong>
@@ -279,45 +299,277 @@
         </div>
       </section>
 
+      <section id="pathlab" class="lab-section" aria-labelledby="lab-title">
+        <div class="lab-section__inner">
+          <p class="lab-section__eyebrow">
+            <span>PATH</span><strong>LAB</strong>
+          </p>
+
+          <h2 id="lab-title" class="lab-section__title">
+            <span>Transformamos ideias em jornadas com</span>
+            <strong>propósito, visual marcante e foco em resultado.</strong>
+          </h2>
+
+          <div class="lab-services" aria-label="Serviços Path Lab">
+            <article class="lab-service lab-service--research">
+              <div class="lab-service__icon" aria-hidden="true">
+                <i data-lucide="search"></i>
+              </div>
+              <h3>UX Research</h3>
+              <p>Investigamos comportamentos e necessidades reais dos usuários com métodos como entrevistas, testes e dinâmicas. Tudo para guiar boas decisões de produto.</p>
+            </article>
+
+            <article class="lab-service lab-service--validation">
+              <div class="lab-service__icon" aria-hidden="true">
+                <i data-lucide="badge-check"></i>
+              </div>
+              <h3>Validação de Produto</h3>
+              <p>Testamos com usuários reais pra entender se o produto atende às necessidades do público. Valide antes de investir e evite retrabalho no desenvolvimento.</p>
+            </article>
+
+            <article class="lab-service lab-service--interfaces">
+              <div class="lab-service__icon" aria-hidden="true">
+                <i data-lucide="monitor-smartphone"></i>
+              </div>
+              <h3>Design de Interfaces</h3>
+              <p>Criamos interfaces intuitivas, bonitas e funcionais. Do mobile ao desktop, garantimos experiências fluídas, consistentes e com a cara da sua marca.</p>
+            </article>
+
+            <article class="lab-service lab-service--identity">
+              <div class="lab-service__icon" aria-hidden="true">
+                <i data-lucide="id-card"></i>
+              </div>
+              <h3>Identidade Visual</h3>
+              <p>Construímos marcas fortes e consistentes, que vão além do logo. Identidades alinhadas ao propósito, prontas pra se destacar em qualquer ponto de contato.</p>
+            </article>
+
+            <article class="lab-service lab-service--content">
+              <div class="lab-service__icon" aria-hidden="true">
+                <i data-lucide="pencil-line"></i>
+              </div>
+              <h3>Design de Conteúdo</h3>
+              <p>Estruturamos mensagens, fluxos e microcopys para tornar produtos mais claros, úteis e humanos. Conteúdo que orienta, engaja e melhora a experiência.</p>
+            </article>
+          </div>
+
+          <p class="lab-projects__intro">
+            Veja como o PathLab transforma marcas em experiências
+            <br />
+            visuais que conectam, comunicam e geram valor.
+          </p>
+
+          <div class="lab-projects" aria-labelledby="lab-projects-title">
+            <h3 id="lab-projects-title" class="sr-only">Projetos Path Lab</h3>
+
+            <button class="lab-project is-active" type="button" data-lab-project>
+              <img class="lab-project__image" src="/src/assets/images/pc1.webp" alt="Prévia de projeto de construção de sites" />
+              <span class="lab-project__overlay" aria-hidden="true"></span>
+              <span class="lab-project__content">
+                <span class="lab-project__icon" aria-hidden="true">
+                  <i data-lucide="monitor-smartphone"></i>
+                </span>
+                <span class="lab-project__title">Construção de sites</span>
+                <span class="lab-project__description">
+                  Sites rápidos, responsivos e com design estratégico. Tudo pensado para comunicar bem sua marca e gerar resultado de verdade.
+                </span>
+              </span>
+            </button>
+
+            <button class="lab-project" type="button" data-lab-project>
+              <img class="lab-project__image" src="/src/assets/images/tb1.avif" alt="Prévia de projeto de branding e manual de marca" />
+              <span class="lab-project__overlay" aria-hidden="true"></span>
+              <span class="lab-project__content">
+                <span class="lab-project__icon" aria-hidden="true">
+                  <i data-lucide="swatch-book"></i>
+                </span>
+                <span class="lab-project__title">Branding e manual de marca</span>
+                <span class="lab-project__description">
+                  Criamos guias completos com aplicações da identidade visual, garantindo consistência em todos os pontos de contato da sua marca.
+                </span>
+              </span>
+            </button>
+
+            <button class="lab-project" type="button" data-lab-project>
+              <img class="lab-project__image" src="/src/assets/images/cl1.avif" alt="Prévia de projeto de conteúdos para redes sociais" />
+              <span class="lab-project__overlay" aria-hidden="true"></span>
+              <span class="lab-project__content">
+                <span class="lab-project__icon" aria-hidden="true">
+                  <i data-lucide="gallery-vertical-end"></i>
+                </span>
+                <span class="lab-project__title">Conteúdos para redes sociais</span>
+                <span class="lab-project__description">
+                  Produzimos peças visuais e textos alinhados à sua estratégia, fortalecendo a presença da marca nas redes com criatividade e propósito.
+                </span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="pathfin" class="fin-section" aria-labelledby="fin-title" data-header-theme="dark">
+        <div class="fin-section__inner">
+          <p class="fin-section__eyebrow">
+            <span>PATH</span><strong>FIN</strong>
+          </p>
+
+          <h2 id="fin-title" class="fin-section__title">
+            <span>Experiência real em construir soluções</span>
+            <strong>que impulsionam toda a operação</strong>
+          </h2>
+
+          <p class="fin-carousel-hint">Deslize para ver mais <span aria-hidden="true">&rarr;</span></p>
+
+          <div class="fin-grid" aria-label="Frentes Path Fin">
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="user-round-plus"></i>
+              </div>
+              <h3>Onboarding digital</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Simplificamos o cadastro com soluções seguras e automatizadas. Reduza etapas manuais, acelere a entrada e ofereça uma jornada fluida desde o primeiro acesso.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="shield-check"></i>
+              </div>
+              <h3>Suitability inteligente</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Automatize a avaliação do perfil do investidor com segurança e conformidade. Ofereça produtos alinhados às regras da CVM e Anbima, com mais agilidade.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="badge-dollar-sign"></i>
+              </div>
+              <h3>Renda Fixa</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Organize a exibição e gestão de CDBs, LCIs, LCAs e títulos públicos. Controle prazos e taxas com mais clareza, tudo em uma plataforma simples e integrada.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="chart-column-big"></i>
+              </div>
+              <h3>Fundos de Investimento</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Exiba, compare e gerencie fundos de forma intuitiva. Criamos soluções com painéis interativos, relatórios automáticos e dados sempre atualizados.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="wallet-cards"></i>
+              </div>
+              <h3>Carteira do investidor</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Centralize a visualização e gestão de ativos com dashboards personalizados. Dados de várias fontes, alertas e gráficos em tempo real, tudo no mesmo lugar.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="candlestick-chart"></i>
+              </div>
+              <h3>Home Broker</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Facilite a compra e venda de ativos com plataformas completas. Cotações ao vivo, gráficos interativos e envio de ordens com poucos cliques.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="activity"></i>
+              </div>
+              <h3>Plataforma de Trading</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Criamos plataformas completas para quem opera com frequência. Gráficos avançados, indicadores, book de ofertas e ordens em tempo real, com máxima agilidade e controle.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="message-circle-more"></i>
+              </div>
+              <h3>Ordens via WhatsApp</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Ofereça envio de ordens direto pelo WhatsApp com segurança e integração total. Uma jornada simples, prática e alinhada ao dia a dia do investidor.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="layout-dashboard"></i>
+              </div>
+              <h3>Portais personalizados</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Desenhamos portais sob medida para cada público. Mais segurança, governança e uma experiência simples e funcional em todo o processo.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="badge-percent"></i>
+              </div>
+              <h3>Rentabilidade</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Transforme números em respostas claras. Calculamos performance da carteira, consolidamos dados e apresentamos tudo de forma visual e acessível.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="sparkles"></i>
+              </div>
+              <h3>Recomendações inteligentes</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Sistemas que analisam perfil, carteira e mercado pra gerar recomendações em tempo real. Mais personalização e agilidade na oferta de produtos.</p>
+            </article>
+
+            <article class="fin-card">
+              <div class="fin-card__icon-shell" aria-hidden="true">
+                <i class="fin-card__icon" data-lucide="shield-plus"></i>
+              </div>
+              <h3>Seguros e Previdência</h3>
+              <span class="fin-card__line" aria-hidden="true"></span>
+              <p>Desenvolvemos plataformas digitais pra facilitar a oferta de seguros e previdência. Simuladores, comparadores e integração com seguradoras em um só lugar.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section id="solucoes" class="solutions-section" aria-labelledby="solutions-title">
         <h2 id="solutions-title" class="sr-only">Nossas soluções</h2>
 
         <div class="solutions-grid">
-          <article class="solution-card">
+          <a class="solution-card" href="#pathia">
             <i class="solution-card__icon" data-lucide="bot-message-square" aria-hidden="true"></i>
             <h3>PATH<strong>IA</strong></h3>
             <p>Desenvolvemos agentes, automações e integrações que escalam o atendimento e otimizam o dia a dia com IA.</p>
-          </article>
+          </a>
 
-          <article class="solution-card">
+          <a class="solution-card" href="#pathtalent">
             <i class="solution-card__icon" data-lucide="users-round" aria-hidden="true"></i>
             <h3>PATH<strong>TALENT</strong></h3>
             <p>Alocamos talentos, formamos profissionais e montamos squads sob medida, com foco em qualidade e parceria duradoura.</p>
-          </article>
+          </a>
 
-          <article class="solution-card">
+          <a class="solution-card" href="#pathstudios">
             <i class="solution-card__icon" data-lucide="code-xml" aria-hidden="true"></i>
             <h3>PATH<strong>STUDIOS</strong></h3>
             <p>Nossa consultoria tech apoia seu time com domínio técnico e visão de produto em várias especialidades do dia a dia real.</p>
-          </article>
+          </a>
 
-          <article class="solution-card">
+          <a class="solution-card" href="#pathbuild">
             <i class="solution-card__icon" data-lucide="monitor-smartphone" aria-hidden="true"></i>
             <h3>PATH<strong>BUILD</strong></h3>
             <p>Produtos digitais sob medida, com visão de negócio e excelência técnica. Da ideia à entrega, tudo no ritmo da sua empresa.</p>
-          </article>
+          </a>
 
-          <article class="solution-card">
+          <a class="solution-card" href="#pathlab">
             <i class="solution-card__icon" data-lucide="lightbulb" aria-hidden="true"></i>
             <h3>PATH<strong>LAB</strong></h3>
             <p>Design com propósito. Conectamos marca e experiência para criar produtos intuitivos, belos e que entregam resultado de verdade.</p>
-          </article>
+          </a>
 
-          <article class="solution-card">
+          <a class="solution-card" href="#pathfin">
             <i class="solution-card__icon" data-lucide="chart-line" aria-hidden="true"></i>
             <h3>PATH<strong>FIN</strong></h3>
             <p>Use nossa experiência no mercado financeiro para automatizar processos, otimizar e melhorar a jornada do investidor.</p>
-          </article>
+          </a>
         </div>
 
         <div id="contato" class="solutions-cta">
@@ -335,6 +587,117 @@
         </div>
       </section>
     </main>
+
+    <footer class="site-footer" aria-labelledby="footer-title" data-header-theme="dark">
+      <div class="site-footer__inner">
+        <div class="site-footer__main">
+          <div class="site-footer__panel site-footer__panel--brand">
+            <a class="site-footer__mark" href="/" aria-label="Pathbit">
+              <img class="site-footer__logo-symbol" src="/src/assets/images/pathbit-symbol.svg.svg" alt="" />
+            </a>
+
+            <p class="site-footer__brand-name">PATHBIT</p>
+
+            <p id="footer-title" class="site-footer__tagline">
+              Mais que entregas.
+              <br />
+              Uma jornada de evolução.
+            </p>
+          </div>
+
+          <nav class="site-footer__panel site-footer__panel--nav" aria-label="Navegação do rodapé">
+            <p class="site-footer__heading">Navegação</p>
+
+            <div class="site-footer__nav-links">
+              <a class="site-footer__nav-link" href="#pathia">
+                <span>PathIA</span>
+                <i data-lucide="arrow-right" aria-hidden="true"></i>
+              </a>
+              <a class="site-footer__nav-link" href="#pathstudios">
+                <span>PathStudios</span>
+                <i data-lucide="arrow-right" aria-hidden="true"></i>
+              </a>
+              <a class="site-footer__nav-link" href="#pathbuild">
+                <span>PathBuild</span>
+                <i data-lucide="arrow-right" aria-hidden="true"></i>
+              </a>
+              <a class="site-footer__nav-link" href="#pathlab">
+                <span>PathLab</span>
+                <i data-lucide="arrow-right" aria-hidden="true"></i>
+              </a>
+              <a class="site-footer__nav-link" href="#pathfin">
+                <span>PathFin</span>
+                <i data-lucide="arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </nav>
+
+          <div class="site-footer__panel site-footer__panel--social">
+            <p class="site-footer__heading">Redes sociais</p>
+
+            <div class="site-footer__socials" aria-label="Redes sociais da Pathbit">
+              <a
+                class="site-footer__social-link"
+                href="https://www.instagram.com/pathbit/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram da Pathbit"
+              >
+                <svg class="site-footer__social-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="2.75" y="2.75" width="18.5" height="18.5" rx="5.25" fill="none" stroke="currentColor" stroke-width="1.8" />
+                  <circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.8" />
+                  <circle cx="17.3" cy="6.7" r="1.2" fill="currentColor" />
+                </svg>
+              </a>
+              <a
+                class="site-footer__social-link"
+                href="https://www.linkedin.com/company/pathbit/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn da Pathbit"
+              >
+                <svg class="site-footer__social-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6.76 8.88a1.71 1.71 0 1 1 0-3.42 1.71 1.71 0 0 1 0 3.42Zm-1.49 9.66V10.4h2.98v8.14H5.27Zm4.85 0V10.4h2.86v1.11h.04c.4-.75 1.37-1.53 2.83-1.53 3.03 0 3.59 1.99 3.59 4.58v3.98h-2.98v-3.53c0-.84-.02-1.92-1.17-1.92-1.17 0-1.35.91-1.35 1.85v3.6h-2.98Z" fill="currentColor" />
+                </svg>
+              </a>
+              <a
+                class="site-footer__social-link"
+                href="https://www.youtube.com/@pathbit"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="YouTube da Pathbit"
+              >
+                <svg class="site-footer__social-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21.08 7.17a2.81 2.81 0 0 0-1.97-1.99C17.37 4.7 12 4.7 12 4.7s-5.37 0-7.11.48A2.81 2.81 0 0 0 2.92 7.17C2.44 8.93 2.44 12 2.44 12s0 3.07.48 4.83a2.81 2.81 0 0 0 1.97 1.99c1.74.48 7.11.48 7.11.48s5.37 0 7.11-.48a2.81 2.81 0 0 0 1.97-1.99c.48-1.76.48-4.83.48-4.83s0-3.07-.48-4.83Z" fill="none" stroke="currentColor" stroke-width="1.8" />
+                  <path d="m10.2 15.15 4.5-3.15-4.5-3.15v6.3Z" fill="currentColor" />
+                </svg>
+              </a>
+              <a
+                class="site-footer__social-link"
+                href="https://api.whatsapp.com/send/?phone=551152866569&text&type=phone_number&app_absent=0"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WhatsApp da Pathbit"
+              >
+                <svg class="site-footer__social-icon site-footer__social-icon--whatsapp" viewBox="0 0 448 512" aria-hidden="true">
+                  <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32 101 32 1.2 131.8 1.2 254.8c0 39.3 10.3 77.7 29.8 111.5L0 480l116.5-30.6c32.5 17.7 69.1 27 106.9 27h.1c122.9 0 222.7-99.8 222.8-222.7 0-59.5-23.1-115.3-65.4-156.6ZM223.5 438.8h-.1c-33.7 0-66.7-9.1-95.4-26.2l-6.9-4.1-69.1 18.1 18.5-67.3-4.5-6.9c-18.7-29.7-28.6-63.9-28.6-97.6C37.4 152.6 120.7 69.3 223.9 69.3c49.7 0 96.5 19.4 131.7 54.6 35.2 35.3 54.5 82.1 54.5 131.8-.1 103.1-83.4 183.1-186.6 183.1Zm101.3-138.7c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.5-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-65.9-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.5-19.4 19-19.4 46.3s19.9 53.7 22.7 57.4c2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.6-6.7Z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="site-footer__bottom">
+          <p class="site-footer__copyright">© Pathbit <span data-current-year></span>. Todos os direitos reservados.</p>
+
+          <div class="site-footer__legal" aria-label="Links legais">
+            <a href="/legal.html#politica">Política de privacidade</a>
+            <span class="site-footer__legal-dot" aria-hidden="true">•</span>
+            <a href="/legal.html#termos">Termos de uso</a>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <a
       class="whatsapp-float"
