@@ -240,9 +240,24 @@ function setupNetworkLights() {
 function setupHeader() {
   const hero = document.querySelector(".hero");
   const header = document.querySelector(".hero__header");
+  const menuToggle = header?.querySelector(".hero__menu-toggle");
+  const nav = header?.querySelector(".hero__nav");
+  const mobileMedia = window.matchMedia("(max-width: 768px)");
   let lastScrollY = window.scrollY;
 
   if (!hero || !header) return;
+
+  const setMenuState = (isOpen) => {
+    if (!menuToggle || !nav) return;
+
+    header.classList.toggle("hero__header--menu-open", isOpen);
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "Fechar menu principal" : "Abrir menu principal");
+  };
+
+  const closeMenu = () => {
+    setMenuState(false);
+  };
 
   const updateHeaderState = () => {
     const currentScrollY = window.scrollY;
@@ -259,9 +274,39 @@ function setupHeader() {
     lastScrollY = currentScrollY;
   };
 
+  if (menuToggle && nav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = header.classList.contains("hero__header--menu-open");
+      setMenuState(!isOpen);
+    });
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!mobileMedia.matches) return;
+      if (!(event.target instanceof Node)) return;
+      if (header.contains(event.target)) return;
+      closeMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    });
+  }
+
   updateHeaderState();
   window.addEventListener("scroll", updateHeaderState, { passive: true });
-  window.addEventListener("resize", updateHeaderState);
+  window.addEventListener("resize", () => {
+    updateHeaderState();
+
+    if (!mobileMedia.matches) {
+      closeMenu();
+    }
+  });
 }
 
 function setupTypedHero() {
@@ -610,27 +655,33 @@ function setupLegalTabs() {
 
   let currentPanelState = null;
 
+  const resolveActiveSectionId = (state) => {
+    if (!state?.sections?.length) return "";
+
+    const anchorY = getScrollOffset() + 48;
+    const passedSections = state.sections.filter(
+      (section) => section.element.getBoundingClientRect().top <= anchorY,
+    );
+
+    return (passedSections.at(-1) ?? state.sections[0]).id;
+  };
+
+  const syncCurrentSection = (state) => {
+    const nextSectionId = resolveActiveSectionId(state);
+
+    if (!nextSectionId) return;
+
+    setActiveSectionLink(state, nextSectionId);
+  };
+
   const connectObserver = (state) => {
     if (!state?.sections?.length) return;
 
     state.observer?.disconnect();
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((entryA, entryB) => entryB.intersectionRatio - entryA.intersectionRatio);
-
-        if (visibleEntries.length) {
-          setActiveSectionLink(state, visibleEntries[0].target.id);
-          return;
-        }
-
-        const passedSections = state.sections.filter(
-          (section) => section.element.getBoundingClientRect().top <= getScrollOffset() + 72,
-        );
-
-        setActiveSectionLink(state, (passedSections.at(-1) ?? state.sections[0]).id);
+      () => {
+        syncCurrentSection(state);
       },
       {
         rootMargin: `-${getScrollOffset() + 24}px 0px -55% 0px`,
@@ -640,7 +691,7 @@ function setupLegalTabs() {
 
     state.sections.forEach((section) => observer.observe(section.element));
     state.observer = observer;
-    setActiveSectionLink(state, state.activeSectionId || state.sections[0].id);
+    syncCurrentSection(state);
   };
 
   let activeTab = allowedTabs.has(getHashTab())
@@ -745,6 +796,16 @@ function setupLegalTabs() {
     closeToc(currentPanelState);
     connectObserver(currentPanelState);
   });
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!currentPanelState) return;
+
+      syncCurrentSection(currentPanelState);
+    },
+    { passive: true },
+  );
 
   syncTabs(activeTab);
 }

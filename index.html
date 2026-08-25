@@ -37,9 +37,21 @@
           <img class="hero__brand-logo" src="/src/assets/images/logo.svg" alt="" />
         </a>
 
-        <nav class="hero__nav" aria-label="Navegação principal">
+        <button
+          class="hero__menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="hero-nav"
+          aria-label="Abrir menu principal"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="hero-nav" class="hero__nav" aria-label="Navegação principal">
           <a href="#solucoes">Nossas soluções</a>
-          <a href="#contato">Fale com a Path</a>
+          <a aria-disabled="true">Fale com a Path</a>
         </nav>
       </header>
 
@@ -404,6 +416,8 @@
             <span>Experiência real em construir soluções</span>
             <strong>que impulsionam toda a operação</strong>
           </h2>
+
+          <p class="fin-carousel-hint">Deslize para ver mais <span aria-hidden="true">&rarr;</span></p>
 
           <div class="fin-grid" aria-label="Frentes Path Fin">
             <article class="fin-card">

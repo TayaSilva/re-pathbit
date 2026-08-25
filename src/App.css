@@ -1579,6 +1579,10 @@ main {
   -webkit-background-clip: text;
 }
 
+.fin-carousel-hint {
+  display: none;
+}
+
 .fin-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2900,6 +2904,11 @@ main {
     padding: 76px 20px 62px;
   }
 
+  .ai-section__eyebrow,
+  .ai-section__title {
+    color: #fff;
+  }
+
   .ai-section::before {
     top: 22px;
     bottom: 22px;
@@ -3217,17 +3226,40 @@ main {
     line-height: 1.1;
   }
 
+  .fin-carousel-hint {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+
+    margin: 18px 0 0;
+
+    color: rgba(236, 240, 248, 0.8);
+
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .fin-carousel-hint span {
+    display: inline-block;
+    font-size: 16px;
+    transform: translateX(0);
+    animation: finCarouselHintArrow 1.4s ease-in-out infinite;
+  }
+
   .fin-grid {
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(260px, 84vw);
-    gap: 16px;
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
     width: 100%;
     margin-top: 38px;
-    padding: 4px 2px 14px;
+    padding: 4px 6px 14px 2px;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-padding-left: 2px;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
@@ -3237,8 +3269,9 @@ main {
   }
 
   .fin-card {
-    min-height: 0;
-    padding: 24px 22px;
+    flex: 0 0 min(248px, 78vw);
+    min-height: 248px;
+    padding: 18px 18px 16px;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
@@ -3249,11 +3282,13 @@ main {
   }
 
   .fin-card h3 {
-    font-size: 18px;
+    font-size: 15px;
+    min-height: 2.4em;
   }
 
   .fin-card p {
-    font-size: 14px;
+    font-size: 12.5px;
+    line-height: 1.46;
   }
 
   .solutions-section {
@@ -3398,11 +3433,29 @@ main {
   .site-footer__main {
     grid-template-columns: 1fr;
     gap: 30px;
+    justify-items: center;
   }
 
   .site-footer__panel + .site-footer__panel {
     padding-left: 0;
     border-left: 0;
+  }
+
+  .site-footer__panel {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .site-footer__panel--nav {
+    display: none;
+  }
+
+  .site-footer__panel--social {
+    justify-items: center;
+  }
+
+  .site-footer__mark {
+    justify-self: center;
   }
 
   .site-footer__brand-name {
@@ -3422,16 +3475,22 @@ main {
     gap: 16px;
   }
 
+  .site-footer__socials {
+    justify-content: center;
+  }
+
   .site-footer__bottom {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     margin-top: 36px;
     padding-top: 24px;
+    text-align: center;
   }
 
   .site-footer__legal {
     gap: 10px 14px;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .whatsapp-float {
@@ -3444,6 +3503,19 @@ main {
   .whatsapp-float__icon {
     width: 30px;
     height: 30px;
+  }
+}
+
+@keyframes finCarouselHintArrow {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.72;
+  }
+
+  50% {
+    transform: translateX(4px);
+    opacity: 1;
   }
 }
 
