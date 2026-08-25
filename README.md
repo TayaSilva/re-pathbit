@@ -13,8 +13,9 @@ npm run lint
 
 ## Estrutura principal
 
-- `index.html`: conteúdo indexável e estrutura da página.
-- `src/App.css`: estilos das seções principais.
-- `src/components/Hero/Hero.css`: estilos do hero.
-- `src/index.css`: reset/base global.
+- `index.html`: página principal do site.
+- `legal.html`: página de documentos legais.
+- `src/site.css`: estilos principais das seções.
+- `src/hero.css`: estilos da área inicial.
+- `src/base.css`: reset e base global.
 - `src/main.js`: animações e interações em JavaScript puro.
